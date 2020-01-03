@@ -12,7 +12,7 @@ data class Food (
     val expiryDate: Date?,
     val shelfLife: Pair<Int, Int>?)
 {
-    @PrimaryKey(autoGenerate = true) val id: Int = 0
+    @PrimaryKey(autoGenerate = true) var id: Int = 0
 }
 
 // consider adding:    val shelfLife: Pair
