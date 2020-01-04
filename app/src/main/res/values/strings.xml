@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">In The Fridge</string>
     <string name="action_settings">Settings</string>
+    <string name="hint_name">Name</string>
+    <string name="hint_descrip">Description (optional)</string>
+    <string name="button_save">Add Item</string>
+    <string name="empty_not_saved">Missing values, entry not saved.</string>
 </resources>

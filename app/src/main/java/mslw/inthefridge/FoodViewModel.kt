@@ -12,7 +12,7 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     val storedFoods: LiveData<List<Food>>
 
     init {
-        val foodsDao = FoodDatabase.getDatabase(application).foodDao()
+        val foodsDao = FoodDatabase.getDatabase(application, viewModelScope).foodDao()
         repository = FoodRepository(foodsDao)
         storedFoods = repository.storedFoods
     }

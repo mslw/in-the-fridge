@@ -13,4 +13,8 @@ interface FoodDao {
 
     @Delete
     suspend fun delete(foodItem: Food)
+
+    @Query("DELETE FROM Food")
+    suspend fun wipe()
+
 }
