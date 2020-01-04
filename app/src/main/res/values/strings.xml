@@ -5,4 +5,6 @@
     <string name="hint_descrip">Description (optional)</string>
     <string name="button_save">Add Item</string>
     <string name="empty_not_saved">Missing values, entry not saved.</string>
+    <string name="label_hours">Hours</string>
+    <string name="label_days">Days</string>
 </resources>

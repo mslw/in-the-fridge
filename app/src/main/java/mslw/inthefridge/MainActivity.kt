@@ -67,9 +67,28 @@ class MainActivity : AppCompatActivity() {
         if (requestCode == newFoodActivityRequestCode && resultCode == Activity.RESULT_OK) {
             val name = data?.getStringExtra(NewFoodActivity.EXTRA_NAME)
             val description = data?.getStringExtra(NewFoodActivity.EXTRA_DESCRIPTION)
-            val openDate = Date(1578090519315)  // mock up some date
-            if (name != null && description != null) {
-                val food = Food(name, description, openDate, null, null)
+            val days = data?.getIntExtra(NewFoodActivity.EXTRA_DAYS, 0)
+            val hours = data?.getIntExtra(NewFoodActivity.EXTRA_HOURS, 0)
+
+            if (name != null && description != null && days != null && hours != null) {
+                // alternatively could use non-null assertion !! above
+
+                val openDate = Calendar.getInstance()
+
+                val expDate: Calendar?
+                val shelfLife: Pair<Int, Int>?
+                if (days > 0 || hours > 0){
+                    expDate = Calendar.getInstance()  // it's milliseconds later but don't care
+                    expDate.add(Calendar.DAY_OF_MONTH, days)
+                    expDate.add(Calendar.HOUR_OF_DAY, hours)
+                    shelfLife = Pair(days, hours)
+                } else {
+                    expDate = null
+                    shelfLife = null
+                }
+
+                // note that calendar.time returns Date
+                val food = Food(name, description, openDate.time, expDate?.time, shelfLife)
                 foodViewModel.insert(food)
             }
         } else {
