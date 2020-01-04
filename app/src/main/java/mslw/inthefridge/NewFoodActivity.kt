@@ -28,7 +28,7 @@ class NewFoodActivity : AppCompatActivity() {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
             } else {
                 val name = editFoodNameView.text.toString()
-                val description = editFoodNameView.text.toString()
+                val description = editFoodDescriptionView.text.toString()
                 replyIntent.putExtra(EXTRA_NAME, name)
                 replyIntent.putExtra(EXTRA_DESCRIPTION, description)
                 setResult(Activity.RESULT_OK, replyIntent)

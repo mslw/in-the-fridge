@@ -15,6 +15,9 @@ class FoodListAdapter internal constructor(context: Context):
 
     inner class FoodViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val foodItemView: TextView = itemView.findViewById(R.id.textView1)
+        val foodItemDescriptionView: TextView = itemView.findViewById(R.id.textView2)
+        val foodItemOpenDateView: TextView = itemView.findViewById(R.id.textView3)
+        val foodItemExpireView: TextView = itemView.findViewById(R.id.textView4)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -25,6 +28,13 @@ class FoodListAdapter internal constructor(context: Context):
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val current = foods[position]
         holder.foodItemView.text = current.name
+        holder.foodItemDescriptionView.text = current.description
+
+        // TODO: format dates, for example using method below
+        // val fmt = SimpleDateFormat()
+        // val fdate = fmt.format(current.openDate)
+        holder.foodItemOpenDateView.text = current.openDate.toString()
+        holder.foodItemExpireView.text = current.expiryDate?.toString() ?: ""
     }
 
     internal fun setFoods(foods: List<Food>){
