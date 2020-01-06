@@ -12,4 +12,8 @@ class FoodRepository(private val foodDao: FoodDao) {
     suspend fun delete(food: Food) {
         foodDao.delete(food)
     }
+
+    fun selectById(id: Int): LiveData<Food> {
+        return foodDao.selectById(id)
+    }
 }

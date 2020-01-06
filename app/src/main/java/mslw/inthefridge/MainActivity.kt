@@ -43,6 +43,9 @@ class MainActivity : AppCompatActivity() {
             // update the cached copy of foods in the adapter
             words?.let { adapter.setFoods(it)}
         })
+
+        // supply a click listener to be used with all items (foodItemClicked defined below)
+        adapter.clickListener = {foodItem: Food -> foodItemClicked(foodItem)}
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -98,5 +101,16 @@ class MainActivity : AppCompatActivity() {
                 Toast.LENGTH_LONG
             ).show()
         }
+    }
+
+    private fun foodItemClicked(foodItem: Food){
+
+        val intent = Intent(this@MainActivity, ItemDetailActivity::class.java)
+        intent.putExtra(EXTRA_ID, foodItem.id)
+        startActivity(intent)
+    }
+
+    companion object {
+        const val EXTRA_ID = "mslw.inthefridge.foodlistsql.ID"
     }
 }

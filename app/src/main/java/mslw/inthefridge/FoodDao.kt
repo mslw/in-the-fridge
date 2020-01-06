@@ -17,4 +17,7 @@ interface FoodDao {
     @Query("DELETE FROM Food")
     suspend fun wipe()
 
+    @Query("SELECT * FROM Food WHERE id = :id LIMIT 1")
+    fun selectById(id: Int): LiveData<Food>
+
 }

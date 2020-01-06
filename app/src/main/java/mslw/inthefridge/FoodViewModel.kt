@@ -21,4 +21,6 @@ class FoodViewModel(application: Application): AndroidViewModel(application) {
     fun insert(food: Food) = viewModelScope.launch { repository.insert(food) }
     fun delete(food: Food) = viewModelScope.launch { repository.delete(food) }
 
+    // method to query for single item (return LiveData so it can be used in main thread)
+    fun selectById(id: Int): LiveData<Food> = repository.selectById(id)
 }

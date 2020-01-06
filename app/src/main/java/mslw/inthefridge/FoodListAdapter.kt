@@ -12,6 +12,7 @@ class FoodListAdapter internal constructor(context: Context):
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var foods = emptyList<Food>() // cached copy of foods
+    lateinit var clickListener: (Food) -> Unit
 
     inner class FoodViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val foodItemView: TextView = itemView.findViewById(R.id.textView1)
@@ -35,6 +36,9 @@ class FoodListAdapter internal constructor(context: Context):
         // val fdate = fmt.format(current.openDate)
         holder.foodItemOpenDateView.text = current.openDate.toString()
         holder.foodItemExpireView.text = current.expiryDate?.toString() ?: ""
+        if (this::clickListener.isInitialized) {
+            holder.itemView.setOnClickListener { clickListener(current) }
+        }
     }
 
     internal fun setFoods(foods: List<Food>){
