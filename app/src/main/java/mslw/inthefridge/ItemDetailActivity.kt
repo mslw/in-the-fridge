@@ -8,6 +8,8 @@ import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ItemDetailActivity : AppCompatActivity() {
 
@@ -33,13 +35,27 @@ class ItemDetailActivity : AppCompatActivity() {
         // Prepare handle for delete button
         val deleteButton = findViewById<ImageButton>(R.id.detail_delete_button)
 
+        // Create a simple date formatter - uses locale by default
+        val fmt = SimpleDateFormat()
+
         // Create the observer which updates the UI
         val itemObserver = Observer<Food> {item ->
             foodNameView.text = item.name
             foodDescView.text = item.description
-            foodOpenView.text = item.openDate.toString()
-            foodExpView.text = item.expiryDate?.toString() ?: "n/a"
-            foodShelfLifeView.text = item.shelfLife?.toString() ?: "n/a"
+            foodOpenView.text = getString(R.string.detail_open_date, fmt.format(item.openDate))
+            foodExpView.text = when (item.expiryDate) {
+                null -> getString(R.string.detail_expire_date_miss)
+                else -> getString(R.string.detail_expire_date, fmt.format(item.expiryDate))
+            }
+            foodShelfLifeView.text = when (item.shelfLife) {
+                null -> getString(R.string.detail_shelf_life_miss)
+                else -> getString(R.string.detail_shelf_life,
+                    resources.getQuantityString(
+                        R.plurals.plural_days, item.shelfLife.first, item.shelfLife.first),
+                    resources.getQuantityString(
+                        R.plurals.plural_hours, item.shelfLife.second, item.shelfLife.second)
+                    )
+            }
         }
 
         // observe the LiveData containing selected food item

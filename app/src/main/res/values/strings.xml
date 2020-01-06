@@ -11,4 +11,20 @@
     <string name="dialog_yes">Yes</string>
     <string name="dialog_no">No</string>
     <string name="dialog_delete_question">Delete this item?</string>
+
+    <string name="detail_open_date">Opened on: %1$s</string>
+    <string name="detail_expire_date">Expiry date: %1$s</string>
+    <string name="detail_expire_date_miss">Expiry date not set</string>
+    <string name="detail_shelf_life">Shelf life: %1$s %2$s</string>
+    <string name="detail_shelf_life_miss">Shelf life not set</string>
+
+    <plurals name="plural_hours">
+        <item quantity="one">%d hour</item>
+        <item quantity="other">%d hours</item>
+    </plurals>
+
+    <plurals name="plural_days">
+        <item quantity="one">%d day</item>
+        <item quantity="other">%d days</item>
+    </plurals>
 </resources>
