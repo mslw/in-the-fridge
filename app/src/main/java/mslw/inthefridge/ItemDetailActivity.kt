@@ -3,6 +3,7 @@ package mslw.inthefridge
 import android.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.lifecycle.LiveData
@@ -31,12 +32,16 @@ class ItemDetailActivity : AppCompatActivity() {
         val foodOpenView = findViewById<TextView>(R.id.detail_opened_textView)
         val foodExpView = findViewById<TextView>(R.id.detail_exp_textView)
         val foodShelfLifeView = findViewById<TextView>(R.id.detail_shelf_life_textView)
+        val foodIntervalView = findViewById<TextView>(R.id.detail_interval_textView)
 
         // Prepare handle for delete button
         val deleteButton = findViewById<ImageButton>(R.id.detail_delete_button)
 
         // Create a simple date formatter - uses locale by default
         val fmt = SimpleDateFormat()
+
+        // Be aware of time
+        val currentCal = Calendar.getInstance()
 
         // Create the observer which updates the UI
         val itemObserver = Observer<Food> {item ->
@@ -56,6 +61,23 @@ class ItemDetailActivity : AppCompatActivity() {
                         R.plurals.plural_hours, item.shelfLife.second, item.shelfLife.second)
                     )
             }
+
+            if (item.expiryDate == null) {
+                foodIntervalView.text = getString(R.string.detail_expire_interval_miss)
+            } else {
+                val relTimeSpan = DateUtils.getRelativeTimeSpanString(
+                    item.expiryDate.time,
+                    currentCal.timeInMillis,
+                    DateUtils.HOUR_IN_MILLIS)
+                if (item.expiryDate.time > currentCal.timeInMillis) {
+                    foodIntervalView.text = getString(
+                        R.string.detail_expire_interval_future, relTimeSpan)
+                } else {
+                    foodIntervalView.text = getString(
+                        R.string.detail_expire_interval_past, relTimeSpan)
+                }
+            }
+
         }
 
         // observe the LiveData containing selected food item

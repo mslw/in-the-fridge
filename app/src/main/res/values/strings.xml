@@ -17,6 +17,9 @@
     <string name="detail_expire_date_miss">Expiry date not set</string>
     <string name="detail_shelf_life">Shelf life: %1$s %2$s</string>
     <string name="detail_shelf_life_miss">Shelf life not set</string>
+    <string name="detail_expire_interval_future">Expires: %1$s</string>
+    <string name="detail_expire_interval_past">Expired: %1$s</string>
+    <string name="detail_expire_interval_miss">Expires: n/a</string>
 
     <plurals name="plural_hours">
         <item quantity="one">%d hour</item>
