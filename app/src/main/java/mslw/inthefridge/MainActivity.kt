@@ -12,6 +12,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -46,6 +47,15 @@ class MainActivity : AppCompatActivity() {
 
         // supply a click listener to be used with all items (foodItemClicked defined below)
         adapter.clickListener = {foodItem: Food -> foodItemClicked(foodItem)}
+
+        // handle swipe to refresh
+        val swipeView = findViewById<SwipeRefreshLayout>(R.id.main_swipe_refresh_layout)
+        swipeView.setOnRefreshListener {
+            adapter.notifyDataSetChanged()  // force content to be redrawn
+            Toast.makeText(applicationContext, "Refreshed", Toast.LENGTH_LONG).show()
+            swipeView.isRefreshing = false
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
