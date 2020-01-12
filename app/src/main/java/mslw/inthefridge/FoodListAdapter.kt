@@ -1,11 +1,13 @@
 package mslw.inthefridge
 
 import android.content.Context
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.time.Instant
 
 class FoodListAdapter internal constructor(context: Context):
     RecyclerView.Adapter<FoodListAdapter.FoodViewHolder>() {
@@ -17,8 +19,7 @@ class FoodListAdapter internal constructor(context: Context):
     inner class FoodViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val foodItemView: TextView = itemView.findViewById(R.id.textView1)
         val foodItemDescriptionView: TextView = itemView.findViewById(R.id.textView2)
-        val foodItemOpenDateView: TextView = itemView.findViewById(R.id.textView3)
-        val foodItemExpireView: TextView = itemView.findViewById(R.id.textView4)
+        val foodItemIntervalView: TextView = itemView.findViewById(R.id.textView3)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FoodViewHolder {
@@ -28,14 +29,17 @@ class FoodListAdapter internal constructor(context: Context):
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val current = foods[position]
+        val timeNow = Instant.now().toEpochMilli()
+
         holder.foodItemView.text = current.name
         holder.foodItemDescriptionView.text = current.description
+        holder.foodItemIntervalView.text = if (current.expiryDate != null)
+            DateUtils.getRelativeTimeSpanString(
+                current.expiryDate.time,
+                timeNow,
+                DateUtils.HOUR_IN_MILLIS
+            ) else "-"
 
-        // TODO: format dates, for example using method below
-        // val fmt = SimpleDateFormat()
-        // val fdate = fmt.format(current.openDate)
-        holder.foodItemOpenDateView.text = current.openDate.toString()
-        holder.foodItemExpireView.text = current.expiryDate?.toString() ?: ""
         if (this::clickListener.isInitialized) {
             holder.itemView.setOnClickListener { clickListener(current) }
         }
